@@ -6,6 +6,7 @@ db = sql_device_app.db
 
 
 class Device(db.Model):
+    __tablename__ = "devices"
     id = db.Column(db.Integer, primary_key=True)
     platform = db.Column(db.String(50), nullable=False)
     user_id = db.Column(db.Integer, unique=True, nullable=False)

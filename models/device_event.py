@@ -5,7 +5,8 @@ from sql_client.flask_app_client import sql_device_app
 db = sql_device_app.db
 
 
-class Device(db.Model):
+class DeviceEvent(db.Model):
+    __tablename__ = "device_events"
     id = db.Column(db.Integer, primary_key=True)
     device_id = db.Column(db.Integer, nullable=True)
     type = db.Column(db.Integer, nullable=False)
