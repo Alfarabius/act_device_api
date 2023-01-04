@@ -1,18 +1,20 @@
-from config import DSN
 from flask import Flask
+from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
+
+from config import Configuration
 
 
 class SQLDeviceAPP:
-    def __init__(self, dsn: str):
+    def __init__(self):
         self.app = Flask(__name__)
-        self.app.config["SQLALCHEMY_DATABASE_URI"] = dsn
+        self.app.config.from_object(Configuration)
         self.db = SQLAlchemy(self.app)
+        self.migrate = Migrate()
+
+        with self.app.app_context():
+            self.migrate.init_app(self.app, self.db)
 
 
-sql_device_app = SQLDeviceAPP(DSN)
-
-
-if __name__ == "__main__":
-    sql_device_app.db.create_all()
-    sql_device_app.app.run(debug=True)
+sql_device_app = SQLDeviceAPP()
+app = sql_device_app.app  # for flask db command, doesn't work without it
