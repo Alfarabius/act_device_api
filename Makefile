@@ -1,3 +1,7 @@
+.PHONY: flask-db-run
+flask-db-run:
+	python sql_client/flask_app_client.py
+
 .PHONY: dc-build
 dc-build: dc-down
 	docker-compose -p alfarabi up -d --no-deps --build --force-recreate act-device-api
