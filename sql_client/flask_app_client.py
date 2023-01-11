@@ -3,6 +3,7 @@ from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
 from config import Configuration
+from datetime import datetime
 
 
 class SQLDeviceAPP:
@@ -18,3 +19,4 @@ class SQLDeviceAPP:
 
 sql_device_app = SQLDeviceAPP()
 app = sql_device_app.app  # for flask db command, doesn't work without it
+db = sql_device_app.db

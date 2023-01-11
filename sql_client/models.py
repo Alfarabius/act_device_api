@@ -1,8 +1,7 @@
 from datetime import datetime
 
-from flask_app_client import sql_device_app
+from flask_app_client import db
 
-db = sql_device_app.db
 
 
 class Device(db.Model):
