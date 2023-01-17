@@ -1,4 +1,5 @@
 from flask import Flask
+from flask_cors import CORS
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 
@@ -19,3 +20,4 @@ class SQLDeviceAPP:
 sql_device_app = SQLDeviceAPP()
 app = sql_device_app.app  # for flask db command, doesn't work without it
 db = sql_device_app.db
+CORS(app)  # Add CORS to the application by passing it to the app instance
