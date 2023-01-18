@@ -39,12 +39,14 @@ class DeviceEvent(db.Model):
     __tablename__ = "device_events"
 
     id = db.Column(db.Integer, primary_key=True)
-    device_id = db.Column(db.Integer, nullable=True)
+    device_id = db.Column(db.Integer, db.ForeignKey("devices.id"), nullable=False)
     type = db.Column(db.Integer, nullable=False)
     status = db.Column(db.Integer, nullable=False)
     payload = db.Column(db.JSON, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
     update_at = db.Column(db.DateTime, default=datetime.utcnow, nullable=False)
+
+    device = db.relationship("Device", backref=db.backref("devices", uselist=False))
 
     def __repr__(self):
         return (

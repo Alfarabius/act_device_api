@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import jsonify, request, send_from_directory
+from flask import jsonify, make_response, request, send_from_directory
 from flask_app_client import app, db
 from flask_cors import cross_origin
 from flask_swagger_ui import get_swaggerui_blueprint
@@ -27,6 +27,30 @@ def send_static(path):
     return send_from_directory("static", path)
 
 
+@app.errorhandler(400)
+def handle_400_error(_error):
+    """Return a http 400 error to client"""
+    return make_response(jsonify({"error": "Misunderstood"}), 400)
+
+
+@app.errorhandler(401)
+def handle_401_error(_error):
+    """Return a http 401 error to client"""
+    return make_response(jsonify({"error": "Unauthorised"}), 401)
+
+
+@app.errorhandler(404)
+def handle_404_error(_error):
+    """Return a http 404 error to client"""
+    return make_response(jsonify({"error": "Not found"}), 404)
+
+
+@app.errorhandler(500)
+def handle_500_error(_error):
+    """Return a http 500 error to client"""
+    return make_response(jsonify({"error": "Server error"}), 500)
+
+
 @cross_origin()
 @app.route("/api/v1/devices", methods=["POST"])
 def create_device():
@@ -50,7 +74,7 @@ def get_device(device_id):
 
 
 @cross_origin()
-@app.route("/api/v1/devices/<device_id>", methods=["PATCH"])
+@app.route("/api/v1/devices/<device_id>", methods=["PUT"])
 def update_device(device_id):
     device = Device.query.get_or_404(device_id)
 
@@ -75,3 +99,16 @@ def delete_device(device_id):
     db.session.delete(device)
     db.session.commit()
     return jsonify({"message": f"device {device} successfully deleted"})
+
+
+@cross_origin()
+@app.route("/api/v1/devices", methods=["GET"])
+def get_devices():
+    amount = request.args.get("Amount")
+    devices = Device.query.limit(amount)
+
+    response = []
+    for device in devices:
+        response.append(Device.serialize(device))
+
+    return jsonify(response)
