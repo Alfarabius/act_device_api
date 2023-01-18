@@ -53,57 +53,6 @@
           }
         }
       },
-      "patch": {
-        "summary": "Update device",
-        "tags": [
-          "Devices"
-        ],
-        "operationId": "update_device",
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "required": true,
-            "description": "Device id",
-            "schema": {
-              "type": "integer"
-            },
-            "example": 12
-          }
-        ],
-        "requestBody": {
-          "required": true,
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/Device"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "Succsess",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Device"
-                }
-              }
-            }
-          },
-          "default": {
-            "description": "Undefined",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
-        }
-      },
       "delete": {
         "summary": "Delete device by id",
         "tags": [
@@ -289,10 +238,6 @@
           "user_id"
         ],
         "properties": {
-          "id": {
-            "type": "integer",
-            "example": 21
-          },
           "platform": {
             "type": "string",
             "example": "IOS"
